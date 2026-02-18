@@ -12,14 +12,18 @@ This repo manages a looping YouTube livestream built from local `.mp4` files.
 
 ## Key Files
 - `youtube_live.sh`: Streams videos in `video/` to YouTube (primary + backup RTMP).
-- `stream.pid`: PID of the last started livestream process (when launched with the command below).
+- `stream.pid`: PID of the last started livestream process (when launched with the command below). This file is gitignored.
 - `yt-dlp`: Helper binary for downloading videos.
+
+## Links
+- Livestream: https://www.youtube.com/watch?v=cqFh1LGD8gg
+- Playlist site: https://eugland.github.io/live-stream-mp4/
 
 ## Run The Livestream
 From the repo root:
 
 ```bash
-nohup ./youtube_live.sh ./video > logs/stream.log 2>&1 & echo $! > stream.pid
+nohup ./youtube_live.sh ./video > /dev/null 2>&1 & echo $! > stream.pid
 ```
 
 ## Generate The Playlist Page
