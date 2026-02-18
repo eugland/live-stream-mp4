@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [[ $# -ne 1 ]]; then
+  echo "Usage: $0 <youtube_url>" >&2
+  exit 1
+fi
+
+url="$1"
+
+if ! command -v yt-dlp >/dev/null 2>&1; then
+  echo "Error: yt-dlp is not installed or not in PATH." >&2
+  echo "Install it first, e.g.: pip install yt-dlp" >&2
+  exit 2
+fi
+
+mkdir -p video
+
+# --restrict-filenames ensures a filesystem-safe name and replaces spaces with underscores.
+# Output goes to video/<sanitized_title>.<ext>
+yt-dlp \
+  --restrict-filenames \
+  --no-playlist \
+  --retries 10 \
+  --fragment-retries 10 \
+  --extractor-args="youtube:player_client=default,-tv" \
+  -f "bv*+ba/b" \
+  -o "video/%(title)s.%(ext)s" \
+  "$url"
