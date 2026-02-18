@@ -35,7 +35,7 @@ stream_with_reconnect() {
   while true; do
     echo "Streaming: $file"
     if ffmpeg -re -i "$file" \
-      -map 0:v:0 -map 0:a:0? \
+      -map 0:v:0 -map "0:a:0?" \
       -c:v libx264 -preset veryfast -pix_fmt yuv420p -g 60 -r 30 \
       -c:a aac -b:a 128k -ar 44100 \
       -f tee "[f=flv]${PRIMARY_URL}|[f=flv]${BACKUP_URL}"; then
